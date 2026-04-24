@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Inomark · Marketing digital estratégico</title>
+  <link rel="icon" href="assets/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    html, body { margin: 0; padding: 0; }
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    ::selection { background: #5EEAD4; color: #0B1120; }
+
+    @media (max-width: 780px) {
+      .nav-links { display: none !important; }
+      footer > div > div:first-child {
+        grid-template-columns: 1fr 1fr !important;
+      }
+      .contact-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+      .form-row { grid-template-columns: 1fr !important; }
+    }
+
+    /* Tweaks panel */
+    .tweaks-panel {
+      position: fixed; right: 18px; bottom: 18px; z-index: 50;
+      background: #0B1120; color: #F1F5F9;
+      border: 1px solid #1E2D42;
+      border-radius: 14px;
+      padding: 18px;
+      width: 280px;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+      display: none;
+    }
+    .tweaks-panel.open { display: block; }
+    .tweaks-panel h4 {
+      margin: 0 0 14px; font-size: 12px; letter-spacing: 1.6px; text-transform: uppercase;
+      font-weight: 500; color: #5EEAD4;
+    }
+    .tweaks-row { margin-bottom: 14px; }
+    .tweaks-row:last-child { margin-bottom: 0; }
+    .tweaks-row label {
+      display: block; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase;
+      color: #94A3B8; margin-bottom: 8px; font-weight: 500;
+    }
+    .tweaks-segmented {
+      display: flex; background: #162032; border-radius: 8px; padding: 3px; gap: 3px;
+    }
+    .tweaks-segmented button {
+      flex: 1; background: transparent; border: 0; color: #94A3B8;
+      padding: 7px 8px; border-radius: 6px; font: inherit;
+      font-size: 12px; font-weight: 500; cursor: pointer;
+    }
+    .tweaks-segmented button.active { background: #5EEAD4; color: #0B1120; }
+    .tweaks-swatches { display: flex; gap: 8px; }
+    .tweaks-swatches button {
+      width: 28px; height: 28px; border-radius: 50%; border: 2px solid transparent;
+      cursor: pointer; padding: 0;
+    }
+    .tweaks-swatches button.active { border-color: #F1F5F9; transform: scale(1.1); }
+  </style>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- Isotipo/Wordmark from slides.jsx (reusing same components) -->
+  <script type="text/babel" src="slides.jsx"></script>
+  <script type="text/babel" src="site/icons.jsx"></script>
+  <script type="text/babel" src="site/nav-hero.jsx"></script>
+  <script type="text/babel" src="site/services-process.jsx"></script>
+  <script type="text/babel" src="site/pricing-faq.jsx"></script>
+  <script type="text/babel" src="site/blog-cta-footer.jsx"></script>
+  <script type="text/babel" src="site/contact.jsx"></script>
+
+  <script type="text/babel" data-presets="react">
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "mode": "dark",
+      "density": "normal",
+      "accentHue": "teal"
+    }/*EDITMODE-END*/;
+
+    const ACCENTS = {
+      teal:  { dark: '#5EEAD4', light: '#0D7A6B', swatch: '#5EEAD4' },
+      mint:  { dark: '#86EFAC', light: '#0F766E', swatch: '#86EFAC' },
+      cyan:  { dark: '#67E8F9', light: '#0E7490', swatch: '#67E8F9' },
+      violet:{ dark: '#C4B5FD', light: '#6D28D9', swatch: '#C4B5FD' },
+    };
+
+    function applyAccent(baseTokens, hue) {
+      const accent = ACCENTS[hue] || ACCENTS.teal;
+      return {
+        dark:  { ...baseTokens.dark,  teal: accent.dark,  tealDark: accent.light },
+        light: { ...baseTokens.light, teal: accent.light, tealDark: accent.light },
+      };
+    }
+
+    function App() {
+      const [state, setState] = React.useState(TWEAK_DEFAULTS);
+      const [tweaksOpen, setTweaksOpen] = React.useState(false);
+
+      React.useEffect(() => {
+        function onMsg(ev) {
+          const d = ev.data || {};
+          if (d.type === '__activate_edit_mode') setTweaksOpen(true);
+          if (d.type === '__deactivate_edit_mode') setTweaksOpen(false);
+        }
+        window.addEventListener('message', onMsg);
+        window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+        return () => window.removeEventListener('message', onMsg);
+      }, []);
+
+      const update = (patch) => {
+        const next = { ...state, ...patch };
+        setState(next);
+        window.parent.postMessage({ type: '__edit_mode_set_keys', edits: patch }, '*');
+      };
+
+      const themed = applyAccent(tokens, state.accentHue);
+      const t = themed[state.mode];
+
+      React.useEffect(() => {
+        document.body.style.background = t.bg;
+        document.body.style.color = t.text;
+      }, [t.bg, t.text]);
+
+      return (
+        <div data-screen-label="Inomark Landing" style={{ background: t.bg, color: t.text, minHeight: '100vh' }}>
+          <Nav t={t} />
+          <Hero t={t} density={state.density} />
+          <Stats t={t} />
+          <Services t={t} density={state.density} />
+          <Process t={t} density={state.density} />
+          <Pricing t={t} density={state.density} />
+          <FAQ t={t} density={state.density} />
+          <Blog t={t} density={state.density} />
+          <Contact t={t} density={state.density} />
+          <CTABand t={t} />
+          <Footer t={t} />
+
+          <div className={`tweaks-panel ${tweaksOpen ? 'open' : ''}`}>
+            <h4>Tweaks</h4>
+            <div className="tweaks-row">
+              <label>modo</label>
+              <div className="tweaks-segmented">
+                <button className={state.mode === 'dark' ? 'active' : ''} onClick={() => update({ mode: 'dark' })}>oscuro</button>
+                <button className={state.mode === 'light' ? 'active' : ''} onClick={() => update({ mode: 'light' })}>claro</button>
+              </div>
+            </div>
+            <div className="tweaks-row">
+              <label>densidad</label>
+              <div className="tweaks-segmented">
+                <button className={state.density === 'compact' ? 'active' : ''} onClick={() => update({ density: 'compact' })}>compacto</button>
+                <button className={state.density === 'normal' ? 'active' : ''} onClick={() => update({ density: 'normal' })}>normal</button>
+                <button className={state.density === 'airy' ? 'active' : ''} onClick={() => update({ density: 'airy' })}>aireado</button>
+              </div>
+            </div>
+            <div className="tweaks-row">
+              <label>color acento</label>
+              <div className="tweaks-swatches">
+                {Object.keys(ACCENTS).map((k) => (
+                  <button key={k}
+                    className={state.accentHue === k ? 'active' : ''}
+                    style={{ background: ACCENTS[k].swatch }}
+                    onClick={() => update({ accentHue: k })}
+                    title={k} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
