@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo calcular el ROAS real (y por qué el de Meta miente) | Inomark</title>
+<meta name="description" content="Meta te muestra un ROAS inflado. Aprendé a calcular POAS — el único KPI que importa para saber si tu paid media es realmente rentable.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.inomark.com.ar/blog/como-calcular-roas-real.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cómo calcular el ROAS real (y por qué el de Meta miente)">
+<meta property="og:description" content="Meta te muestra un ROAS inflado. Aprendé a calcular POAS — el único KPI que importa para saber si tu paid media es realmente rentable.">
+<meta property="og:url" content="https://www.inomark.com.ar/blog/como-calcular-roas-real.html">
+<meta property="og:image" content="https://www.inomark.com.ar/og-image.png">
+<meta property="og:site_name" content="Inomark">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cómo calcular el ROAS real (y por qué el de Meta miente)">
+<meta name="twitter:description" content="Meta te muestra un ROAS inflado. Aprendé a calcular POAS — el único KPI que importa para saber si tu paid media es realmente rentable.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Cómo calcular el ROAS real (y por qué el de Meta miente)",
+  "description": "Meta te muestra un ROAS inflado. Aprendé a calcular POAS — el único KPI que importa para saber si tu paid media es realmente rentable.",
+  "author": {
+    "@type": "Person",
+    "name": "Gonzalo Casanova"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Inomark",
+    "url": "https://www.inomark.com.ar"
+  },
+  "datePublished": "2026-04-25",
+  "dateModified": "2026-04-25",
+  "url": "https://www.inomark.com.ar/blog/como-calcular-roas-real.html"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0B1120;
+    color: #F1F5F9;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  a { color: inherit; text-decoration: none; }
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(11, 17, 32, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 0.5px solid #1E2D42;
+    padding: 18px 0;
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-brand { display: flex; align-items: center; gap: 12px; }
+  .nav-iso {
+    width: 32px; height: 32px;
+    background: #162032; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .nav-name span { color: #5EEAD4; }
+  .nav-cta {
+    background: #5EEAD4; color: #0B1120;
+    padding: 9px 18px; border-radius: 8px;
+    font-size: 13px; font-weight: 600;
+    transition: transform 0.15s;
+  }
+  .nav-cta:hover { transform: translateY(-1px); }
+  .hero { padding: 80px 32px 56px; max-width: 760px; margin: 0 auto; }
+  .badge {
+    display: inline-block;
+    font-size: 11px; padding: 5px 14px;
+    border-radius: 20px; background: #162032;
+    color: #5EEAD4; font-weight: 500;
+    border: 0.5px solid #1E2D42;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+  .article-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700; line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+  }
+  .article-subtitle {
+    font-size: 18px; color: #94A3B8;
+    line-height: 1.6; margin-bottom: 28px;
+  }
+  .article-meta {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 13px; color: #94A3B8;
+    padding-top: 20px;
+    border-top: 0.5px solid #1E2D42;
+  }
+  .meta-dot { width: 4px; height: 4px; background: #2D4A6B; border-radius: 50%; }
+  .author-name { color: #5EEAD4; font-weight: 600; }
+  .article-body { max-width: 720px; margin: 0 auto; padding: 0 32px 56px; }
+  .article-body p {
+    font-size: 16px; color: #CBD5E1;
+    line-height: 1.75; margin-bottom: 22px;
+  }
+  .article-body h2 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 28px; font-weight: 700;
+    color: #5EEAD4;
+    margin: 56px 0 20px;
+    letter-spacing: -0.8px;
+    line-height: 1.2;
+  }
+  .article-body h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 20px; font-weight: 700;
+    color: #F1F5F9;
+    margin: 36px 0 14px;
+    letter-spacing: -0.3px;
+  }
+  .article-body ul, .article-body ol { margin: 0 0 24px 0; padding-left: 0; list-style: none; }
+  .article-body li {
+    font-size: 16px; color: #CBD5E1;
+    line-height: 1.75; margin-bottom: 12px;
+    padding-left: 28px; position: relative;
+  }
+  .article-body ul li::before {
+    content: "→"; color: #5EEAD4;
+    position: absolute; left: 0; top: 0;
+    font-weight: 700;
+  }
+  .article-body ol { counter-reset: list; }
+  .article-body ol li { counter-increment: list; }
+  .article-body ol li::before {
+    content: counter(list) ".";
+    color: #5EEAD4; font-weight: 700;
+    position: absolute; left: 0; top: 0;
+  }
+  .article-body strong { color: #F1F5F9; font-weight: 600; }
+  .article-body em { color: #5EEAD4; font-style: normal; font-weight: 500; }
+  .quote {
+    background: #162032;
+    border-left: 3px solid #5EEAD4;
+    padding: 20px 24px;
+    margin: 32px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 17px;
+    color: #F1F5F9;
+    font-style: italic;
+  }
+  .quote p { margin: 0 !important; color: #F1F5F9 !important; }
+  .number-card {
+    background: #162032;
+    border: 0.5px solid #1E2D42;
+    border-radius: 12px;
+    padding: 24px; margin: 28px 0;
+  }
+  .number-card-title {
+    font-family: 'DM Sans', sans-serif;
+    color: #5EEAD4; font-weight: 700;
+    font-size: 14px; text-transform: uppercase;
+    letter-spacing: 1.5px; margin-bottom: 12px;
+  }
+  .number-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+  }
+  .number-card-value {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 28px; font-weight: 700;
+    color: #F1F5F9;
+    letter-spacing: -1px;
+  }
+  .number-card-label {
+    font-size: 12px; color: #94A3B8;
+    margin-top: 4px;
+  }
+  .code-block {
+    background: #0B1120;
+    border: 0.5px solid #1E2D42;
+    border-radius: 8px;
+    padding: 18px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #5EEAD4;
+    margin: 20px 0;
+    overflow-x: auto;
+  }
+  .article-cta { max-width: 720px; margin: 56px auto; padding: 0 32px; }
+  .cta-card {
+    background: #162032;
+    border: 0.5px solid #1E2D42;
+    border-radius: 14px;
+    padding: 36px 32px;
+    text-align: center;
+  }
+  .cta-card h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 24px; font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+    color: #F1F5F9;
+  }
+  .cta-card p {
+    color: #94A3B8;
+    margin-bottom: 24px;
+    font-size: 15px;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #5EEAD4; color: #0B1120;
+    padding: 12px 24px; border-radius: 8px;
+    font-size: 14px; font-weight: 600;
+    transition: transform 0.15s;
+  }
+  .btn-primary:hover { transform: translateY(-1px); }
+  .btn-primary svg { width: 16px; height: 16px; }
+  .related {
+    max-width: 1100px; margin: 0 auto;
+    padding: 56px 32px 24px;
+    border-top: 0.5px solid #1E2D42;
+  }
+  .related-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 20px; font-weight: 700;
+    margin-bottom: 24px;
+    color: #F1F5F9;
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .related-card {
+    background: #162032;
+    border: 0.5px solid #1E2D42;
+    border-radius: 12px;
+    padding: 22px;
+    transition: border-color 0.15s, transform 0.15s;
+    display: block;
+  }
+  .related-card:hover {
+    border-color: #5EEAD4;
+    transform: translateY(-2px);
+  }
+  .related-cat {
+    font-size: 10px; color: #5EEAD4;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    font-weight: 600; margin-bottom: 10px;
+  }
+  .related-card-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 600;
+    color: #F1F5F9; line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  .related-meta { font-size: 11.5px; color: #94A3B8; }
+  .footer {
+    border-top: 0.5px solid #1E2D42;
+    padding: 40px 32px 24px;
+    margin-top: 40px;
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 32px;
+  }
+  .footer-brand-block { max-width: 300px; }
+  .footer-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 22px; font-weight: 700;
+    letter-spacing: -0.5px; margin-bottom: 8px;
+  }
+  .footer-name span { color: #5EEAD4; }
+  .footer-desc {
+    font-size: 12.5px; color: #94A3B8;
+    line-height: 1.6;
+  }
+  .footer-col-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px; font-weight: 700;
+    color: #5EEAD4;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    margin-bottom: 14px;
+  }
+  .footer-link {
+    display: block; font-size: 12.5px;
+    color: #94A3B8;
+    margin-bottom: 9px;
+    transition: color 0.15s;
+  }
+  .footer-link:hover { color: #F1F5F9; }
+  .footer-bottom {
+    max-width: 1100px;
+    margin: 28px auto 0;
+    padding-top: 22px;
+    border-top: 0.5px solid #1E2D42;
+    display: flex; justify-content: space-between;
+    font-size: 11px; color: #475569;
+  }
+  @media (max-width: 768px) {
+    .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+    .nav-inner { padding: 0 20px; }
+    .hero, .article-body, .article-cta { padding-left: 20px; padding-right: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">
+      <div class="nav-iso"><svg width="18" height="18" viewBox="0 0 50 50" fill="none">
+          <circle cx="25" cy="25" r="7" fill="#5EEAD4"/>
+          <line x1="25" y1="8" x2="25" y2="14" stroke="#5EEAD4" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="25" cy="8" r="3" fill="#5EEAD4"/>
+          <line x1="36" y1="25" x2="42" y2="25" stroke="#5EEAD4" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="42" cy="25" r="2.5" fill="#5EEAD4" opacity="0.65"/>
+        </svg></div>
+      <span class="nav-name">ino<span>mark</span></span>
+    </a>
+    <a href="https://wa.me/5493815734287?text=Hola!%20Vengo%20del%20blog%20de%20Inomark" class="nav-cta">Escribinos ↗</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="badge">ESTRATEGIA</span>
+  <h1 class="article-title">Cómo calcular el ROAS real (y por qué el de Meta miente)</h1>
+  <p class="article-subtitle">El ROAS que ves en Meta y Google siempre es mayor al ROAS real de tu negocio. Acá te explicamos por qué y cómo calcular el retorno verdadero.</p>
+  <div class="article-meta">
+    <span class="author-name">Gonzalo Casanova</span>
+    <span class="meta-dot"></span>
+    <span>Abril 2026</span>
+    <span class="meta-dot"></span>
+    <span>6 min de lectura</span>
+  </div>
+</header>
+
+<article class="article-body">
+
+<p>Si mirás solo el ROAS que te muestra Meta o Google, estás midiendo mal. <strong>El ROAS de las plataformas siempre miente para arriba</strong> — y muchos e-commerce toman decisiones de inversión basándose en ese número falso.</p>
+
+<p>En este artículo te explico por qué el ROAS de Meta no refleja tu negocio real, y cómo calcular el POAS — el único KPI que importa cuando hablás de rentabilidad.</p>
+
+<h2>Qué es ROAS y por qué importa</h2>
+
+<p><strong>ROAS = Return On Ad Spend = Ingresos generados / Inversión publicitaria.</strong></p>
+
+<p>Es la métrica reina de paid media. Un ROAS de 4× significa que por cada $1 invertido en publicidad, generaste $4 en ventas. Suena buenísimo. Pero hay un problema: <em>ROAS no es ganancia</em>.</p>
+
+<div class="quote">
+  <p>"ROAS te dice cuántos pesos vendiste por cada peso invertido. POAS te dice cuántos pesos GANASTE. La diferencia es enorme."</p>
+</div>
+
+<h2>Los 3 problemas del ROAS de Meta</h2>
+
+<h3>Problema 1: Doble atribución entre canales</h3>
+
+<p>Meta y Google se atribuyen las mismas ventas. Si un usuario ve un anuncio de Meta, después busca tu marca en Google y compra, ambas plataformas reportan esa venta como propia.</p>
+
+<p>Esto significa que si tu Meta dice ROAS 4× y tu Google dice ROAS 5×, sumar ambos para entender el total NO funciona — estarías contando ventas duplicadas.</p>
+
+<h3>Problema 2: ROAS no descuenta costos</h3>
+
+<p>El ROAS son ingresos brutos divididos por inversión publicitaria. No descuenta:</p>
+
+<ul>
+  <li>Costo del producto (CMV)</li>
+  <li>Comisiones de pasarelas de pago (3-5%)</li>
+  <li>Costos de envío subsidiados</li>
+  <li>Comisiones de marketplace si vendés ahí</li>
+  <li>Devoluciones</li>
+</ul>
+
+<h3>Problema 3: Ventana de atribución extendida</h3>
+
+<p>Meta atribuye ventas hasta <strong>7 días después del click</strong> y <strong>1 día después de la vista</strong>. Algunas de esas ventas hubieran ocurrido igual sin el anuncio — son ventas orgánicas que Meta se está atribuyendo.</p>
+
+<h2>Cómo calcular el ROAS real (POAS)</h2>
+
+<p><strong>POAS = Profit On Ad Spend = (Ingresos × Margen) / Inversión publicitaria</strong></p>
+
+<p>POAS es el ROAS pero ponderado por el margen real de tu negocio. Te dice cuánta ganancia genera cada peso invertido en publicidad.</p>
+
+<h3>Ejemplo concreto</h3>
+
+<div class="number-card">
+  <div class="number-card-title">Caso real e-commerce de indumentaria</div>
+  <div class="number-card-grid">
+    <div>
+      <div class="number-card-value">$1.000.000</div>
+      <div class="number-card-label">Ingresos campaña</div>
+    </div>
+    <div>
+      <div class="number-card-value">$200.000</div>
+      <div class="number-card-label">Inversión Meta</div>
+    </div>
+    <div>
+      <div class="number-card-value">5×</div>
+      <div class="number-card-label">ROAS según Meta</div>
+    </div>
+    <div>
+      <div class="number-card-value">35%</div>
+      <div class="number-card-label">Margen bruto</div>
+    </div>
+  </div>
+</div>
+
+<p>Cálculo del POAS:</p>
+
+<ul>
+  <li>Ganancia bruta = $1.000.000 × 35% = <strong>$350.000</strong></li>
+  <li>POAS = $350.000 / $200.000 = <strong>1.75×</strong></li>
+</ul>
+
+<p>El cliente pensaba que estaba ganando 5× su inversión. La realidad: <strong>está ganando 1.75×</strong>. Sigue siendo positivo, pero está muy lejos del número que mostraba Meta.</p>
+
+<div class="quote">
+  <p>"Un ROAS de 5× con margen de 20% es peor negocio que un ROAS de 3× con margen de 50%. POAS lo deja claro al instante."</p>
+</div>
+
+<h2>Por qué POAS es el único KPI que importa</h2>
+
+<h3>Foco en rentabilidad, no en vanidad</h3>
+<p>POAS te obliga a pensar en ganancia real, no en facturación. Es la única forma de saber si tu paid media es un negocio o una hemorragia controlada.</p>
+
+<h3>Permite comparar canales con distinto margen</h3>
+<p>Si vendés productos con márgenes distintos, POAS te dice qué canal/producto está generando más ganancia, no más facturación.</p>
+
+<h3>Alinea marketing con finanzas</h3>
+<p>Tu CFO no piensa en ROAS, piensa en EBITDA. POAS habla el lenguaje de finanzas.</p>
+
+<h2>Cómo trackear POAS en tu operación</h2>
+
+<p>No hay un dashboard mágico que te muestre POAS — tenés que armarlo. La fórmula básica:</p>
+
+<ol>
+  <li>Exportá los datos de inversión + revenue de Meta Ads y Google Ads en un Sheets</li>
+  <li>Cruzá con tu archivo de margen por producto/categoría</li>
+  <li>Calculá POAS = Σ(revenue × margen producto) / Σ(inversión publicitaria)</li>
+  <li>Hacelo semanal, mensual y por campaña</li>
+</ol>
+
+<h3>Estructura de Sheets recomendada</h3>
+
+<ul>
+  <li><strong>Pestaña 1:</strong> Data raw de Meta + Google (export semanal)</li>
+  <li><strong>Pestaña 2:</strong> Margen por producto/categoría</li>
+  <li><strong>Pestaña 3:</strong> Cálculo de POAS con tablas dinámicas</li>
+  <li><strong>Pestaña 4:</strong> Dashboard ejecutivo con KPIs</li>
+</ul>
+
+<h2>Cuál es un buen POAS</h2>
+
+<p>Depende del momento del negocio:</p>
+
+<ul>
+  <li><strong>POAS &gt; 2×</strong> — negocio rentable, escalá la inversión</li>
+  <li><strong>POAS 1× a 2×</strong> — negocio en breakeven, optimizá antes de escalar</li>
+  <li><strong>POAS &lt; 1×</strong> — perdés plata cada mes, pausá y reformulá</li>
+</ul>
+
+<p>Excepción: si recién arrancás, podés tolerar un POAS bajo durante 3-6 meses para construir base de clientes — pero solo si conocés bien tu LTV (lifetime value).</p>
+
+<h2>En resumen</h2>
+
+<p>El ROAS de Meta y Google es una métrica útil pero engañosa. Si tomás decisiones de inversión basándote solo en ese número, vas a sobre-invertir en canales que no son tan rentables como parecen.</p>
+
+<ol>
+  <li>Calculá tu <strong>POAS</strong> mensual cruzando inversión + revenue + margen</li>
+  <li>Apuntá a <strong>POAS &gt; 2×</strong> como objetivo de rentabilidad</li>
+  <li>Hablá con tu CFO en términos de POAS, no de ROAS</li>
+  <li>Optimizá tus campañas hacia POAS, no hacia ROAS</li>
+</ol>
+
+<p>Si querés que te armemos el setup de POAS para tu e-commerce, escribinos.</p>
+
+</article>
+
+<section class="article-cta">
+  <div class="cta-card">
+    <h3>¿Querés que revisemos tu estrategia?</h3>
+    <p>20 minutos, sin costo, sin compromiso. Detectamos qué está fallando y te decimos qué hacer.</p>
+    <a href="https://wa.me/5493815734287?text=Hola!%20Vengo%20del%20blog%20de%20Inomark" class="btn-primary">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+      </svg>
+      Escribirnos por WhatsApp
+    </a>
+  </div>
+</section>
+
+<section class="related">
+  <h3 class="related-title">Leé también</h3>
+  <div class="related-grid">
+    <a href="/blog/5-errores-meta-ads.html" class="related-card">
+      <div class="related-cat">Meta Ads</div>
+      <div class="related-card-title">5 errores en Meta Ads que te están quemando presupuesto</div>
+      <div class="related-meta">8 min de lectura</div>
+    </a>
+    <a href="/blog/guia-ga4-ecommerce.html" class="related-card">
+      <div class="related-cat">Analytics</div>
+      <div class="related-card-title">Guía práctica de GA4 para e-commerce argentinos</div>
+      <div class="related-meta">12 min de lectura</div>
+    </a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand-block">
+      <div class="footer-name">ino<span>mark</span></div>
+      <div class="footer-desc">Marketing digital estratégico. Especialistas en e-commerce y B2B.</div>
+    </div>
+    <div>
+      <div class="footer-col-title">Sitio</div>
+      <a class="footer-link" href="/#servicios">Servicios</a>
+      <a class="footer-link" href="/#proceso">Proceso</a>
+      <a class="footer-link" href="/#precios">Precios</a>
+      <a class="footer-link" href="/#faq">FAQ</a>
+    </div>
+    <div>
+      <div class="footer-col-title">Contacto</div>
+      <a class="footer-link" href="mailto:hola@inomark.com.ar">hola@inomark.com.ar</a>
+      <a class="footer-link" href="https://wa.me/5493815734287">+54 9 381 573-4287</a>
+      <a class="footer-link" href="https://instagram.com/inomark.ar">@inomark.ar</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Inomark · Todos los derechos reservados</span>
+    <span>inomark.com.ar</span>
+  </div>
+</footer>
+
+</body>
+</html>
